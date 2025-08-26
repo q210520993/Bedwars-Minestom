@@ -10,7 +10,6 @@ import net.minestom.server.inventory.click.Click.Left
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import net.minestom.server.tag.Tag
-import net.minestom.server.tag.TagHandler
 import java.util.concurrent.ConcurrentHashMap
 
 class TradeInventory(val gamePlayer: IBedWarsPlayer): SimpleInventory(InventoryType.CHEST_2_ROW, Component.text("测试商店")) {
@@ -50,7 +49,5 @@ class TradeInventory(val gamePlayer: IBedWarsPlayer): SimpleInventory(InventoryT
         gamePlayer.game.removePlayerResource(gamePlayer, "level", allValue)
         gamePlayer.miniPlayer.player?.inventory?.addItemStack(itemstack.withAmount(64))
     }
-
-    fun tryBuy(commodites: )
 
 }
