@@ -1,6 +1,6 @@
 package com.c1ok.bedwars.internal.command
 
-import com.c1ok.bedwars.internal.bedwars.BaseBedWarsGame
+import com.c1ok.bedwars.internal.core.bedwars.BaseBedWarsGame
 import com.c1ok.bedwars.internal.manager.PlayerManagerImpl
 import net.minestom.server.command.builder.Command
 import net.minestom.server.entity.Player

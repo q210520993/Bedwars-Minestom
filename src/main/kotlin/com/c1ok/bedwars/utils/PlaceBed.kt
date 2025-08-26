@@ -1,7 +1,7 @@
 package com.c1ok.bedwars.utils
 
 import com.c1ok.bedwars.api.game.bedwars.Team
-import com.c1ok.bedwars.internal.bedwars.BedHandler
+import com.c1ok.bedwars.internal.core.bedwars.BedHandler
 import net.minestom.server.coordinate.Point
 import net.minestom.server.instance.Instance
 import net.minestom.server.instance.block.Block

@@ -1,7 +1,7 @@
 package com.c1ok.bedwars.api.game.bedwars.items.meta
 
-import com.c1ok.bedwars.api.game.bedwars.IBedWarsPlayer
 import com.c1ok.bedwars.api.game.bedwars.items.SpecialItem
+import net.minestom.server.entity.Player
 
 /**
  *
@@ -9,5 +9,5 @@ import com.c1ok.bedwars.api.game.bedwars.items.SpecialItem
  *
  */
 interface Clickable: SpecialItem {
-    fun onClick(player: IBedWarsPlayer)
+    fun onClick(player: Player)
 }

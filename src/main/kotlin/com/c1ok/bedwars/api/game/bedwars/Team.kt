@@ -1,6 +1,6 @@
 package com.c1ok.bedwars.api.game.bedwars
 
-import net.kyori.adventure.text.Component
+import com.c1ok.bedwars.internal.feature.inventory.trade.TradeInventoryCreator
 import net.minestom.server.coordinate.Point
 import net.minestom.server.coordinate.Pos
 import net.minestom.server.instance.block.Block
@@ -47,6 +47,8 @@ interface Team {
 
     // 队伍是否被团灭
     var isWipedOut: Boolean
+
+    val tradeInventoryCreator: TradeInventoryCreator
 
     fun createBed()
     fun destroyBed()

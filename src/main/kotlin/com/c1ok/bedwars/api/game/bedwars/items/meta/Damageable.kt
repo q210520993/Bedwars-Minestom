@@ -1,7 +1,8 @@
 package com.c1ok.bedwars.api.game.bedwars.items.meta
 
 import com.c1ok.bedwars.api.game.bedwars.items.SpecialItem
-import com.c1ok.bedwars.internal.bedwars.BedWarsPlayer
+import com.c1ok.bedwars.internal.core.bedwars.BedWarsPlayer
+import net.minestom.server.entity.Player
 
 /**
  *
@@ -9,5 +10,5 @@ import com.c1ok.bedwars.internal.bedwars.BedWarsPlayer
  *
  */
 interface Damageable: SpecialItem {
-    fun onDamage(player: BedWarsPlayer)
+    fun onDamage(player: Player)
 }

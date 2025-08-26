@@ -1,6 +1,6 @@
 package com.c1ok.bedwars.utils
 
-import com.c1ok.bedwars.internal.bedwars.item.SpecialItemManagerImpl
+import com.c1ok.bedwars.internal.core.bedwars.item.SpecialItemManagerImpl
 import net.minestom.server.item.ItemStack
 
 fun ItemStack.Builder.setSpecial(id: String): ItemStack.Builder {

@@ -1,16 +1,18 @@
 package com.c1ok.bedwars
 
-import com.c1ok.bedwars.internal.bedwars.exp.ExpBedWars
 import com.c1ok.bedwars.internal.command.TeamStart
 import com.c1ok.bedwars.internal.command.Test
-import com.c1ok.bedwars.internal.inventory.SimpleInventory
-import com.c1ok.bedwars.internal.listeners.Handlers
-import com.c1ok.bedwars.internal.listeners.registerNode
-import com.c1ok.bedwars.internal.lobby.set
+import com.c1ok.bedwars.internal.core.bedwars.exp.ExpBedWars
+import com.c1ok.bedwars.internal.core.lobby.lobbyInit
+import com.c1ok.bedwars.internal.core.lobby.registerSpecial
+import com.c1ok.bedwars.internal.feature.compat.fightsystem.ExhaustListener
+import com.c1ok.bedwars.internal.feature.inventory.SimpleInventory
+import com.c1ok.bedwars.internal.feature.listeners.Handlers
+import com.c1ok.bedwars.internal.feature.listeners.NetworkListener
 import com.c1ok.bedwars.internal.manager.BedWarsManager
+import com.redstone.beacon.Beacon
 import com.redstone.beacon.api.plugin.Plugin
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.MinecraftServer
 import net.minestom.server.adventure.audience.Audiences
 import net.minestom.server.event.server.ServerTickMonitorEvent
@@ -23,17 +25,36 @@ import java.util.concurrent.atomic.AtomicReference
 object Bedwars: Plugin() {
 
     override fun onEnable() {
-        registerNode()
-        set()
+        regsiterListeners()
+        regsiterCommands()
+        lobbyInit()
+        registerSpecial()
+        test()
+        runBenchMarkSend()
+        SimpleInventory.regsiter()
+    }
+
+    private fun regsiterListeners() {
+        Handlers.registerNode()
         Handlers.register()
+        NetworkListener.registerNetworkNode()
+        NetworkListener.regsiterListener()
+        try {
+            if (Beacon.pluginManager.getPlugin("FightSystem") != null) {
+                ExhaustListener.register()
+            }
+        } catch (_: Exception) {}
+    }
+
+    private fun regsiterCommands() {
         MinecraftServer.getCommandManager().register(Test)
         MinecraftServer.getCommandManager().register(TeamStart)
+    }
+
+    private fun test() {
         val bedwars = ExpBedWars()
         bedwars.init()
         BedWarsManager.addGameToManager(bedwars)
-        runBenchMarkSend()
-        SimpleInventory.regsiter()
-        MinecraftServer.getTeamManager().createTeam("test", Component.text("绿队"), NamedTextColor.GREEN, Component.text(""))
     }
 
     private val LAST_TICK = AtomicReference<TickMonitor>()
@@ -79,6 +100,7 @@ object Bedwars: Plugin() {
                 .sendPlayerListHeaderAndFooter(header, footer)
         }.repeat(10, TimeUnit.SERVER_TICK).schedule()
     }
+
     lateinit var lobby: Instance
 
 }

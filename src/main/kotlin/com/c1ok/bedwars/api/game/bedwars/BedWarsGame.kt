@@ -1,9 +1,11 @@
 package com.c1ok.bedwars.api.game.bedwars
 
+import com.c1ok.bedwars.api.game.IMiniPlayer
 import com.c1ok.bedwars.api.game.MiniGame
 import com.c1ok.bedwars.api.game.bedwars.genertors.SpawnResourceType
 import com.c1ok.bedwars.api.game.bedwars.items.SpecialManager
 import net.minestom.server.coordinate.Pos
+import net.minestom.server.entity.Player
 import net.minestom.server.event.entity.EntityDamageEvent
 import net.minestom.server.event.player.PlayerBlockBreakEvent
 import net.minestom.server.event.player.PlayerBlockPlaceEvent
@@ -34,6 +36,16 @@ interface BedWarsGame: MiniGame {
 
     val waitingPos: Pos
 
+    fun getBedwarsPlayer(miniPlayer: IMiniPlayer): IBedWarsPlayer? {
+        val pl = miniPlayer.player ?: return null
+        return getBedwarsPlayer(pl)
+    }
+
+    fun getBedwarsPlayer(player: Player): IBedWarsPlayer? {
+        return getBedwarsPlayer(player.uuid)
+    }
+
+    fun getBedwarsPlayer(uuid: UUID): IBedWarsPlayer?
 
     /**
      * 床被破坏事件处理
@@ -64,8 +76,9 @@ interface BedWarsGame: MiniGame {
      *   - 初始化游戏变量
      *   - 放置初始结构（床、资源点等）
      *   - 进入玩家等待状态（倒计时开始）
+     *   泛型中的Boolean指是否为第一次init
      */
-    fun init()
+    fun init(): CompletableFuture<Boolean>
     // 当游戏刚刚进入倒计时的时候触发
     fun onGameInCountdown()
     fun onGameStart()
@@ -77,7 +90,7 @@ interface BedWarsGame: MiniGame {
      *   - 清理所有玩家数据
      *   - 释放地图资源
      */
-    fun close()
+    fun close(): CompletableFuture<Void>
 
     /**
      * 房间重置（新局准备）
@@ -88,7 +101,7 @@ interface BedWarsGame: MiniGame {
      *   - 重置队伍状态（重生次数、装备等）
      *   - 保留房间配置参数（玩家人数、地图选择等）
      */
-    fun rebuild(): CompletableFuture<Any?>
+    fun rebuild(): CompletableFuture<Void>
 
     fun onEnd(): CompletableFuture<Void>
 
@@ -110,11 +123,11 @@ interface BedWarsGame: MiniGame {
     fun onPlayerRespawn(event: PlayerRespawnEvent) {}
     fun getSpecialItemManager(): SpecialManager
 
-    fun addPlayerResource(player: IBedWarsPlayer, resource: String, count: Number)
+    fun addPlayerResource(player: IBedWarsPlayer, resource: String, count: Number): Boolean
     fun getPlayerResource(player: IBedWarsPlayer, resource: String): Number
     fun isGameResource(resourceType: SpawnResourceType): Boolean
     fun setPlayerResource(player: IBedWarsPlayer, resource: String, count: Number)
-    fun removePlayerResource(player: IBedWarsPlayer, resource: String, count: Number)
+    fun removePlayerResource(player: IBedWarsPlayer, resource: String, count: Number): Boolean
 
     fun openTeamSelectInventory(player: IBedWarsPlayer)
 

@@ -1,6 +1,6 @@
 package com.c1ok.bedwars.internal.command
 
-import com.c1ok.bedwars.internal.inventory.GameInventory
+import com.c1ok.bedwars.internal.feature.inventory.GameInventory
 import net.minestom.server.command.builder.Command
 import net.minestom.server.entity.Player
 

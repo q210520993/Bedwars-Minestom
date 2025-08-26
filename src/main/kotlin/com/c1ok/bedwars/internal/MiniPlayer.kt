@@ -15,7 +15,6 @@ class MiniPlayer(override val uuid: UUID): IMiniPlayer {
 
     override fun onPlayerExitGame() {
         game = null
-        player?.inventory?.clear()
     }
 
 }
